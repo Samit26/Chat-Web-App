@@ -9,13 +9,16 @@ const useGetConversations = () => {
     const getConversations = async () => {
       setLoading(true);
       try {
-        const response = await fetch("http://localhost:5000/api/users", {
-          method: "GET", // or 'POST'
-          credentials: "include", // include cookies with the request
-          headers: {
-            "Content-Type": "application/json",
-          },
-        });
+        const response = await fetch(
+          "https://chat-web-app-z4fr.onrender.com/api/users",
+          {
+            method: "GET", // or 'POST'
+            credentials: "include", // include cookies with the request
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        );
         if (!response.ok) {
           throw new Error("Failed to fetch conversations");
         }

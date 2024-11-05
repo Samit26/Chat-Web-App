@@ -12,15 +12,18 @@ const useLogin = () => {
 
     setLoading(true);
     try {
-      const response = await fetch("http://localhost:5000/api/auth/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          withCredentials: true,
-        },
-        body: JSON.stringify({ username, password }),
-        credentials: "include",
-      });
+      const response = await fetch(
+        "https://chat-web-app-z4fr.onrender.com/api/auth/login",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            withCredentials: true,
+          },
+          body: JSON.stringify({ username, password }),
+          credentials: "include",
+        }
+      );
 
       const data = await response.json();
       console.log(data);

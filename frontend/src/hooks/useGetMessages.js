@@ -11,7 +11,7 @@ const useGetMessages = () => {
     const getMessages = async () => {
       try {
         const response = await fetch(
-          `http://localhost:5000/api/messages/${selectedConversation._id}`,
+          `https://chat-web-app-z4fr.onrender.com/api/messages/${selectedConversation._id}`,
           {
             method: "GET",
             headers: {
