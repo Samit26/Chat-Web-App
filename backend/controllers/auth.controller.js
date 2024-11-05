@@ -55,34 +55,37 @@ export const  signup = async(req,res) => {
     }
 }
 
-export const  login = async(req,res) => {
-   try{
-    const {username, password} = req.body;
-    const user = await User.findOne({username});
-    const isPasswordCorrect = await bcrypt.compare(password, user?.password || '');
+export const login = async (req, res) => {
+    try {
+        const { username, password } = req.body;
+        const user = await User.findOne({ username });
 
-    if(!user){
-        return res.status(400).json({error: "username not found"})
-    }
-    else if(!isPasswordCorrect){
-        return res.status(400).json({error: "wrong password"})
-    }
-    
-    generateTokenAndSetCookie(user._id, res);
+        if (!user) {
+            return res.status(400).json({ error: "Username not found" });
+        }
 
-    res.status(200).json({
-        _id : user._id,
-        fullName : user.fullName,
-        username: user.username,
-        profilePic : user.profilePic
-    })
-   }
-   catch(err){
-    console.log("error in login controller", err.message)
-    res.status(500).json({error : "internal server error"})
-}
-   
-}
+        const isPasswordCorrect = await bcrypt.compare(password, user.password);
+
+        if (!isPasswordCorrect) {
+            return res.status(400).json({ error: "Wrong password" });
+        }
+
+        // Assuming you have a function called generateTokenAndSetCookie
+        // This function should generate a token and set it as a cookie
+        generateTokenAndSetCookie(user._id, res);
+
+        res.status(200).json({
+            _id: user._id,
+            fullName: user.fullName,
+            username: user.username,
+            profilePic: user.profilePic
+        });
+        console.log(res.getHeaders());
+    } catch (err) {
+        console.error("Error in login controller:", err.message);
+        res.status(500).json({ error: "Internal server error" });
+    }
+};
 
 export const  logout = (req,res) => {
     try{
