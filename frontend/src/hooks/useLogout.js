@@ -1,36 +1,36 @@
-import { useState } from "react"
+import { useState } from "react";
 import { useAuthContext } from "../context/AutoContext";
-import { toast } from "react-hot-toast"
-
+import { toast } from "react-hot-toast";
 
 const useLogout = () => {
   const [loading, setLoading] = useState(false);
-  const {setAuthUser} = useAuthContext();
+  const { setAuthUser } = useAuthContext();
 
-
-  const logout = async() => {
+  const logout = async () => {
     setLoading(true);
-    try{
-        const res = await fetch('/api/auth/logout',{
-            method: "POST",
-            headers: {"Content-Type": "application/json"}
-        });
-        const data = await res.json()
-        if(data.error){
-            throw new Error(data.error)
+    try {
+      const res = await fetch(
+        "https://chat-web-app-z4fr.onrender.com/api/auth/logout",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
         }
+      );
+      const data = await res.json();
+      if (data.error) {
+        throw new Error(data.error);
+      }
 
-        localStorage.removeItem('chat-user');
-        setAuthUser(null)
-    } catch (error){
-        toast.error(error.message)
+      localStorage.removeItem("chat-user");
+      setAuthUser(null);
+    } catch (error) {
+      toast.error(error.message);
+    } finally {
+      setLoading(false);
     }
-    finally{
-        setLoading(false)
-    }
-  }
+  };
 
-  return { loading, logout};
-}
+  return { loading, logout };
+};
 
-export default useLogout
+export default useLogout;
