@@ -15,7 +15,7 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(
   cors({
-    origin: "*",
+    origin: "https://chat-web-app-puce-eight.vercel.app",
     credentials: true,
   })
 );
